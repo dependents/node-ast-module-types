@@ -1,0 +1,27 @@
+{
+  "name": "ast-module-types",
+  "version": "1.0.0",
+  "description": "Collection of useful helper functions when trying to determine module type (CommonJS or AMD) properties of an AST node.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrjoelkemp/node-ast-module-types"
+  },
+  "keywords": [
+    "esprima",
+    "module",
+    "type",
+    "define",
+    "require",
+    "factory"
+  ],
+  "author": "Joel Kemp <joel@mrjoelkemp.com> (http://www.mrjoelkemp.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrjoelkemp/node-ast-module-types/issues"
+  },
+  "homepage": "https://github.com/mrjoelkemp/node-ast-module-types"
+}
