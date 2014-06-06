@@ -12,6 +12,7 @@ and returns a boolean.
 
 * `isDefine`: if node matches an AMD `define` function call (defining a module)
 * `isRequire`: if node matches a `require` function all (declaring a dependency)
+* `isTopLevelRequire`: if node matches a `require` at the top of the file. App initialization (aka driver) scripts have this.
 * `isExports`: if the node matches CommonJS `module.exports` or `exports` (defining a module)
 
 Detecting the various forms of defining an AMD module

@@ -18,6 +18,14 @@ module.exports.isRequire = function (node) {
         c.name     === 'require';
 };
 
+// Whether or not the node represents a require at the top of the module
+// This occurs when the module is an initialization (driver) script
+module.exports.isTopLevelRequire = function (node) {
+  // If there's a require, it's either the top-level or nested
+  // at which it still has at least 3 parents
+  return types.isRequire(node) && node.parent.parent.parent.type === 'Program';
+};
+
 // Whether or not the node represents the use of
 // assigning something to module.exports or exports
 module.exports.isExports = function (node) {
