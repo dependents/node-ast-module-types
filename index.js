@@ -23,7 +23,7 @@ module.exports.isRequire = function (node) {
 module.exports.isTopLevelRequire = function (node) {
   // If there's a require, it's either the top-level or nested
   // at which it still has at least 3 parents
-  return types.isRequire(node) && node.parent.parent.parent.type === 'Program';
+  return this.isRequire(node) && node.parent.parent.parent.type === 'Program';
 };
 
 // Whether or not the node represents the use of
