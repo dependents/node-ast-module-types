@@ -1,6 +1,6 @@
 {
   "name": "ast-module-types",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Collection of useful helper functions when trying to determine module type (CommonJS or AMD) properties of an AST node.",
   "main": "index.js",
   "scripts": {
