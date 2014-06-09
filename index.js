@@ -19,11 +19,20 @@ module.exports.isRequire = function (node) {
 };
 
 // Whether or not the node represents a require at the top of the module
-// This occurs when the module is an initialization (driver) script
 module.exports.isTopLevelRequire = function (node) {
   // If there's a require, it's either the top-level or nested
   // at which it still has at least 3 parents
   return this.isRequire(node) && node.parent.parent.parent.type === 'Program';
+};
+
+// Whether or not the node represents an AMD-style driver script's require
+// Example: require(deps, function)
+module.exports.isAMDDriverScriptRequire = function (node) {
+  return  this.isRequire(node) &&
+          node.arguments &&
+          node.arguments[0].type !== 'Literal' &&
+          // For some dynamic node requires
+          node.arguments[0].type !== 'Identifier';
 };
 
 // Whether or not the node represents the use of
