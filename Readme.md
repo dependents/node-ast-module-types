@@ -22,6 +22,7 @@ Detecting the various forms of defining an AMD module
 * `isDependencyForm`: if the node is a define call of the form: `define([deps], func)`
 * `isFactoryForm`: if the node is a define call of the form: `define(func(require))`
 * `isNoDependencyForm`: if the node is a define call of the form: `define({})`
+* `isREMForm`: if the node matches the form: `define(function(require, exports, module){});`
 
 ### Usage
 
