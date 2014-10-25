@@ -4,7 +4,7 @@
   "description": "Collection of useful helper functions when trying to determine module type (CommonJS or AMD) properties of an AST node.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/test.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/mrjoelkemp/node-ast-module-types/issues"
   },
-  "homepage": "https://github.com/mrjoelkemp/node-ast-module-types"
+  "homepage": "https://github.com/mrjoelkemp/node-ast-module-types",
+  "devDependencies": {
+    "esprima": "~1.2.2",
+    "node-source-walk": "~1.1.2"
+  }
 }
