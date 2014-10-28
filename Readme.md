@@ -24,12 +24,16 @@ Detecting the various forms of defining an AMD module
 * `isNoDependencyForm`: if the node is a define call of the form: `define({})`
 * `isREMForm`: if the node matches the form: `define(function(require, exports, module){});`
 
+ES6 Types
+
+* `isES6Import`: if the node is of the form: `import 'mylib'` or `import {something} from 'mylib'`
+
 ### Usage
 
 ```javascript
 var types = require('ast-module-types');
 
-// Assume node is some node of an AST that you parsed using esprima
+// Assume node is some node of an AST that you parsed using esprima or esprima-fb
 // ...
 
 console.log(types.isDefine(node));

@@ -26,7 +26,7 @@ module.exports.isRequire = function (node) {
 // Instead of trying to find the require then backtrack to the top,
 // just take the root and check its immediate child
 module.exports.isTopLevelRequire = function (node) {
-  if (!node.type === 'Program' || !node.body ||
+  if (node.type !== 'Program' || !node.body ||
       !node.body.length || !node.body[0].expression) {
     return false;
   }
@@ -155,4 +155,9 @@ module.exports.isREMForm = function(node) {
   return first.type === 'Identifier' && first.name === 'require' &&
         second.type === 'Identifier' && second.name === 'exports' &&
         third.type === 'Identifier' && third.name === 'module';
+};
+
+// import 'mylib' or import {foo, bar} from 'mylib'
+module.exports.isES6Import = function(node) {
+  return node.type === 'ImportDeclaration' && node.source && node.source.value;
 };

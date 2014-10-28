@@ -1,5 +1,4 @@
 var types = require('../');
-var esprima = require('esprima');
 var assert = require('assert');
 var util = require('util');
 var Walker = require('node-source-walk');
@@ -7,10 +6,11 @@ var Walker = require('node-source-walk');
 describe('module-types', function() {
   // Checks whether of not the checker succeeds on
   // a node in the AST of the given source code
-  function check(code, checker) {
-    var ast = esprima.parse(code);
+  function check(code, checker, harmony) {
     var found = false;
-    var walker = new Walker();
+    var walker = new Walker({
+      esprimaHarmony: !!harmony
+    });
 
     walker.walk(code, function(node) {
       // Use call to avoid .bind(types) everywhere
@@ -18,7 +18,7 @@ describe('module-types', function() {
         found = true;
         walker.stopWalking();
       }
-    })
+    });
 
     return found;
   }
@@ -55,7 +55,7 @@ describe('module-types', function() {
       assert(check('exports.foo = function() {};', types.isExports));
       assert(check('exports = {};', types.isExports));
     });
-  })
+  });
 
   describe('AMD modules', function() {
     it('detects driver scripts', function() {
@@ -80,6 +80,12 @@ describe('module-types', function() {
 
     it('detects no dependency form modules', function() {
       assert(check('define({});', types.isNoDependencyForm));
+    });
+  });
+
+  describe('ES6', function() {
+    it('detects es6 imports', function() {
+      assert(check('import {foo, bar} from "mylib";\nimport "mylib2"', types.isES6Import, true));
     });
   });
 });
