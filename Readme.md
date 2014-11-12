@@ -1,3 +1,5 @@
+# ast-module-types [![travis](http://img.shields.io/travis/mrjoelkemp/ast-module-types.svg)](https://travis-ci.org/mrjoelkemp/node-ast-module-types/) [![npm](http://img.shields.io/npm/v/ast-module-types.svg)](https://npmjs.org/package/ast-module-types) [![npm](http://img.shields.io/npm/dm/ast-module-types.svg)](https://npmjs.org/package/ast-module-types)
+
 Collection of useful helper functions when trying to determine
 module type (CommonJS or AMD) properties of an AST node.
 
