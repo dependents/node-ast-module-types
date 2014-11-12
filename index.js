@@ -161,3 +161,8 @@ module.exports.isREMForm = function(node) {
 module.exports.isES6Import = function(node) {
   return node.type === 'ImportDeclaration' && node.source && node.source.value;
 };
+
+// Any form of es6 export
+module.exports.isES6Export = function (node) {
+  return node.type === 'ExportDeclaration';
+};
