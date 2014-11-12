@@ -1,7 +1,7 @@
 Collection of useful helper functions when trying to determine
 module type (CommonJS or AMD) properties of an AST node.
 
-**AST checks are based on the Esprima (Spidermonkey) format **
+**AST checks are based on the Esprima (Spidermonkey) format**
 
 `npm install ast-module-types`
 
