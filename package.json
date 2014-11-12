@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/mrjoelkemp/node-ast-module-types",
   "devDependencies": {
+    "mocha": "~2.0.1",
     "node-source-walk": "~1.2.0"
   }
 }
