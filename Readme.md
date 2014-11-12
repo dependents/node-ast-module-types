@@ -1,7 +1,7 @@
 Collection of useful helper functions when trying to determine
 module type (CommonJS or AMD) properties of an AST node.
 
-**Assumes that you used Esprima to get the AST nodes.**
+**AST checks are based on the Esprima (Spidermonkey) format **
 
 `npm install ast-module-types`
 
@@ -27,6 +27,7 @@ Detecting the various forms of defining an AMD module
 ES6 Types
 
 * `isES6Import`: if the node is of the form: `import 'mylib'` or `import {something} from 'mylib'`
+* `isES6Export`: if the node is of any es6 export form: ex: `export default 123;` or `export { D as default };`
 
 ### Usage
 

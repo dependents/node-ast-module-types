@@ -87,5 +87,11 @@ describe('module-types', function() {
     it('detects es6 imports', function() {
       assert(check('import {foo, bar} from "mylib";\nimport "mylib2"', types.isES6Import, true));
     });
+
+    it('detects es6 exports', function () {
+      assert(check('export default 123;', types.isES6Export, true));
+      assert(check('export { D as default };', types.isES6Export, true));
+      assert(check('export function inc() { counter++; }', types.isES6Export, true));
+    });
   });
 });
