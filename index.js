@@ -40,9 +40,7 @@ module.exports.isAMDDriverScriptRequire = function (node) {
   return  this.isRequire(node) &&
           node.arguments &&
           node.arguments[0] && node.arguments[0].type &&
-          node.arguments[0].type !== 'Literal' &&
-          // For some dynamic node requires
-          node.arguments[0].type !== 'Identifier';
+          node.arguments[0].type === 'ArrayExpression';
 };
 
 // Whether or not the node represents the use of
