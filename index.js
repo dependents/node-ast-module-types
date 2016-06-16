@@ -103,8 +103,7 @@ module.exports.isNamedForm = function (node) {
 
   var args = node['arguments'];
 
-  // TODO: Should we also make sure the second element is an array?
-  return args && args[0].type === 'Literal';
+  return args && (args[0].type === 'Literal' || args[0].type === 'StringLiteral');
 };
 
 // define([deps], func)
