@@ -35,6 +35,12 @@ describe('module-types', function() {
     });
   });
 
+  describe('isRequire with main-scoped require ', function() {
+    it('detects require function calls', function() {
+      assert(check('require.main.require();', types.isRequire));
+    });
+  });
+
   describe('isTopLevelRequire', function() {
     it('detects top-level (i.e., top of file) require function calls', function() {
       assert(check('require();', types.isTopLevelRequire));
