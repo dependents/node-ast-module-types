@@ -12,15 +12,38 @@ module.exports.isDefine = function (node) {
 
 // Whether or not the node represents a require function call
 module.exports.isRequire = function (node) {
-  if (!node) return false;
-
-  var c = node.callee;
-
-  return c &&
-        node.type  === 'CallExpression' &&
-        c.type     === 'Identifier' &&
-        c.name     === 'require';
+    return this.isPlainRequire(node) || this.isMainScopedRequire(node);
 };
+
+// Whether or not the node represents a plain require function call [require(...)]
+module.exports.isPlainRequire = function (node) {
+    if (!node) return false;
+
+    var c = node.callee;
+
+    return c &&
+          node.type  === 'CallExpression' &&
+          c.type     === 'Identifier' &&
+          c.name     === 'require';
+}
+
+// Whether or not the node represents main-scoped require function call [require.main.require(...)]
+module.exports.isMainScopedRequire = function (node) {
+    if (!node) return false;
+
+    var c = node.callee;
+
+    return c &&
+          node.type  === 'CallExpression' &&
+              c.type     === 'MemberExpression' &&
+              c.object.type === 'MemberExpression' &&
+              c.object.object.type === 'Identifier' &&
+              c.object.object.name === 'require' &&
+              c.object.property.type === 'Identifier' &&
+              c.object.property.name === 'main' &&
+              c.property.type === 'Identifier' &&
+              c.property.name === 'require';
+}
 
 // Whether or not the node represents a require at the top of the module
 // Instead of trying to find the require then backtrack to the top,
