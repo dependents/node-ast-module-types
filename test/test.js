@@ -105,6 +105,7 @@ describe('module-types', function() {
       assert(check('import * as foo from "mod.js";', types.isES6Import, true));
       assert(check('import "mylib2";', types.isES6Import, true));
       assert(check('import foo from "mod.js";', types.isES6Import, true));
+      assert(check('import("foo");', types.isES6Import, true));
     });
 
     it('detects es6 exports', function () {
