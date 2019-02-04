@@ -180,6 +180,7 @@ module.exports.isREMForm = function(node) {
 
 module.exports.isES6Import = function(node) {
   switch(node.type) {
+    case 'Import':
     case 'ImportDeclaration':
     case 'ImportDefaultSpecifier':
     case 'ImportNamespaceSpecifier':
