@@ -1,4 +1,7 @@
-// Whether or not the node represents an AMD define() call
+// Deprecated
+// Whether or not the node represents a generic define() call 
+// Note: this should not be used as it will have false positives.
+// It is mostly used to guide sniffs for other methods and will be made private eventually.
 module.exports.isDefine = function (node) {
   if (!node) return false;
 
@@ -8,6 +11,17 @@ module.exports.isDefine = function (node) {
     node.type === 'CallExpression' &&
     c.type    === 'Identifier' &&
     c.name    === 'define';
+};
+
+// Whether or not the node represents any of the AMD define() forms
+module.exports.isDefineAMD = function (node) {
+  if (!node) return false;
+
+  var e = module.exports;
+
+  return e.isNamedForm(node) || e.isDependencyForm(node) || 
+  e.isFactoryForm(node) || e.isNoDependencyForm(node) || 
+  e.isREMForm(node);
 };
 
 // Whether or not the node represents a require function call
@@ -124,7 +138,7 @@ module.exports.isNamedForm = function (node) {
 
   var args = node['arguments'];
 
-  return args && (args[0].type === 'Literal' || args[0].type === 'StringLiteral');
+  return args && args.length > 0 && (args[0].type === 'Literal' || args[0].type === 'StringLiteral');
 };
 
 // define([deps], func)
@@ -133,7 +147,7 @@ module.exports.isDependencyForm = function (node) {
 
   var args = node['arguments'];
 
-  return args && args[0].type === 'ArrayExpression';
+  return args && args.length > 0 && args[0].type === 'ArrayExpression';
 };
 
 // define(func(require))
@@ -144,7 +158,7 @@ module.exports.isFactoryForm = function (node) {
       firstParamNode = args.length && args[0].params ? args[0].params[0] : null;
 
   // Node should have a function whose first param is 'require'
-  return args && args[0].type === 'FunctionExpression' &&
+  return args && args.length > 0 && args[0].type === 'FunctionExpression' &&
         firstParamNode && firstParamNode.type === 'Identifier' && firstParamNode.name === 'require';
 };
 
@@ -154,7 +168,7 @@ module.exports.isNoDependencyForm = function (node) {
 
   var args = node['arguments'];
 
-  return args && args[0].type === 'ObjectExpression';
+  return args && args.length > 0 && args[0].type === 'ObjectExpression';
 };
 
 // define(function(require, exports, module)
@@ -165,7 +179,7 @@ module.exports.isREMForm = function(node) {
       params = args.length ? args[0].params : null,
       first, second, third;
 
-  if (!args || args[0].type !== 'FunctionExpression' || params.length !== 3) {
+  if (!args || args.length == 0 || args[0].type !== 'FunctionExpression' || params.length !== 3) {
     return false;
   }
 
