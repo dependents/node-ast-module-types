@@ -29,6 +29,26 @@ describe('module-types', function() {
     });
   });
 
+  describe('isDefineAMD', function() {
+    it('does not detect a generic define function call', function() {
+      assert(!check('define();', types.isDefineAMD));
+      // Named form
+      assert(check('define("foobar", ["a"], function(a){});', types.isDefineAMD));
+      // Dependency form
+      assert(check('define(["a"], function(a){});', types.isDefineAMD));
+      // Factory form
+      assert(check('define(function(require){});', types.isDefineAMD));
+      // REM form
+      assert(check('define(function(require, exports, module){});', types.isDefineAMD));
+      // No-dependency form
+      assert(check('define({});', types.isDefineAMD));
+    });
+
+    it('detect a named form AMD define function call', function() {
+      assert(!check('define();', types.isDefineAMD));
+    });
+  });
+
   describe('isRequire', function() {
     it('detects require function calls', function() {
       assert(check('require();', types.isRequire));
