@@ -138,7 +138,10 @@ module.exports.isNamedForm = function (node) {
 
   var args = node['arguments'];
 
-  return args && args.length > 0 && (args[0].type === 'Literal' || args[0].type === 'StringLiteral');
+  return args && args.length == 3 && 
+  (args[0].type === 'Literal' || args[0].type === 'StringLiteral') &&
+  (args[1].type == 'ArrayExpression') && 
+  (args[2].type == 'FunctionExpression');
 };
 
 // define([deps], func)
@@ -147,7 +150,9 @@ module.exports.isDependencyForm = function (node) {
 
   var args = node['arguments'];
 
-  return args && args.length > 0 && args[0].type === 'ArrayExpression';
+  return args && args.length == 2 && 
+  args[0].type === 'ArrayExpression' && 
+  args[1].type == 'FunctionExpression';
 };
 
 // define(func(require))
@@ -158,8 +163,10 @@ module.exports.isFactoryForm = function (node) {
       firstParamNode = args.length && args[0].params ? args[0].params[0] : null;
 
   // Node should have a function whose first param is 'require'
-  return args && args.length > 0 && args[0].type === 'FunctionExpression' &&
-        firstParamNode && firstParamNode.type === 'Identifier' && firstParamNode.name === 'require';
+  return args && args.length == 1 && 
+  args[0].type === 'FunctionExpression' &&
+  firstParamNode && firstParamNode.type === 'Identifier' && 
+  firstParamNode.name === 'require';
 };
 
 // define({})
@@ -168,7 +175,8 @@ module.exports.isNoDependencyForm = function (node) {
 
   var args = node['arguments'];
 
-  return args && args.length > 0 && args[0].type === 'ObjectExpression';
+  return args && args.length == 1 && 
+  args[0].type === 'ObjectExpression';
 };
 
 // define(function(require, exports, module)
