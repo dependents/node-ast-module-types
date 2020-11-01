@@ -44,7 +44,7 @@ describe('module-types', function() {
       assert(check('define({});', types.isDefineAMD));
     });
 
-    it('detect a named form AMD define function call', function() {
+    it('detects a named form AMD define function call', function() {
       assert(!check('define();', types.isDefineAMD));
     });
   });
@@ -98,24 +98,78 @@ describe('module-types', function() {
       assert(!check('require("foo");', types.isAMDDriverScriptRequire));
     });
 
-    it('detects named form', function() {
-      assert(check('define("foobar", ["a"], function(a){});', types.isNamedForm));
+    describe('named form', function() {
+      it('detects named form', function() {
+        assert(check('define("foobar", ["a"], function(a){});', types.isNamedForm));
+      });
+
+      it('needs 3 arguments', function() {
+        assert(!check('define("foobar", ["a"]);', types.isNamedForm));
+        assert(!check('define("foobar", ["a"], function(a){}, "foo");', types.isNamedForm));
+      });
+
+      it('needs the first argument to be a literal', function() {
+        assert(!check('define(["foobar"], ["a"], function(a){});', types.isNamedForm));
+      });
+
+      it('needs the second argument to be an array', function() {
+        assert(!check('define("foobar", 123, function(a){});', types.isNamedForm));
+      });
+
+      it('needs the third argument to be a function', function() {
+        assert(!check('define("foobar", ["foo"], 123);', types.isNamedForm));
+        assert(!check('define("reset", [0, 0], "modifier");', types.isNamedForm));
+      });
     });
 
-    it('detects dependency form modules', function() {
-      assert(check('define(["a"], function(a){});', types.isDependencyForm));
+    describe('dependency form', function() {
+      it('detects dependency form modules', function() {
+        assert(check('define(["a"], function(a){});', types.isDependencyForm));
+      });
+
+      it('needs the first argument to be an array', function() {
+        assert(!check('define(123, function(a){});', types.isDependencyForm));
+      });
+
+      it('needs the second argument to be a function', function() {
+        assert(!check('define(["a"], 123);', types.isDependencyForm));
+      });
+
+      it('needs 2 arguments', function() {
+        assert(!check('define(["a"], function(a){}, 123);', types.isDependencyForm));
+      });
     });
 
-    it('detects factory form modules', function() {
-      assert(check('define(function(require){});', types.isFactoryForm));
+    describe('factory form', function() {
+      it('detects factory form modules', function() {
+        assert(check('define(function(require){});', types.isFactoryForm));
+      });
+
+      it('needs one argument', function() {
+        assert(!check('define(function(require){}, 123);', types.isFactoryForm));
+      });
+
+      it('needs the first argument to be a function', function() {
+        assert(!check('define(123);', types.isFactoryForm));
+      });
     });
 
     it('detects REM form modules', function() {
       assert(check('define(function(require, exports, module){});', types.isREMForm));
     });
 
-    it('detects no dependency form modules', function() {
-      assert(check('define({});', types.isNoDependencyForm));
+    describe('no dependency form', function() {
+      it('detects no dependency form modules', function() {
+        assert(check('define({});', types.isNoDependencyForm));
+      });
+
+      it('needs a aingle argument', function() {
+        assert(!check('define({}, 123);', types.isNoDependencyForm));
+      });
+
+      it('needs the first argument to be an object', function() {
+        assert(!check('define(function(){});', types.isNoDependencyForm));
+      });
     });
   });
 
