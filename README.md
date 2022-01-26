@@ -1,11 +1,13 @@
-# ast-module-types [![travis](http://img.shields.io/travis/mrjoelkemp/ast-module-types.svg)](https://travis-ci.org/mrjoelkemp/node-ast-module-types/) [![npm](http://img.shields.io/npm/v/ast-module-types.svg)](https://npmjs.org/package/ast-module-types) [![npm](http://img.shields.io/npm/dm/ast-module-types.svg)](https://npmjs.org/package/ast-module-types)
+# ast-module-types [![CI](https://github.com/dependents/node-ast-module-types/actions/workflows/ci.yml/badge.svg)](https://github.com/dependents/node-ast-module-types/actions/workflows/ci.yml) [![npm](https://img.shields.io/npm/v/ast-module-types)](https://www.npmjs.com/package/ast-module-types) [![npm](https://img.shields.io/npm/dm/ast-module-types)](https://www.npmjs.com/package/ast-module-types)
 
 Collection of useful helper functions when trying to determine
 module type (CommonJS or AMD) properties of an AST node.
 
 **AST checks are based on the Esprima (Spidermonkey) format**
 
-`npm install ast-module-types`
+```sh
+npm install ast-module-types
+```
 
 ### API
 
@@ -28,15 +30,15 @@ Detecting the various forms of defining an AMD module
 
 ES6 Types
 
-*All types abide by the [EStree spec](https://github.com/estree/estree/blob/master/es6.md)*
+*All types abide by the [EStree spec](https://github.com/estree/estree/blob/master/es2015.md)*
 
 * `isES6Import`: if the node is any of the es6 import forms
 * `isES6Export`: if the node is of any es6 export forms
 
 ### Usage
 
-```javascript
-var types = require('ast-module-types');
+```js
+const types = require('ast-module-types');
 
 // Assume node is some node of an AST that you parsed using esprima or esprima-fb
 // ...
