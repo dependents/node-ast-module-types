@@ -2,8 +2,7 @@
 
 'use strict';
 
-// TODO switch to assert.strict
-const assert = require('assert');
+const assert = require('assert').strict;
 const Walker = require('node-source-walk');
 const types = require('../index.js');
 
