@@ -24,12 +24,6 @@ function check(code, checker, harmony) {
 }
   
 describe('module-types', () => {
-  describe('isDefine', () => {
-    it('detects define function calls', () => {
-      assert.ok(check('define();', types.isDefine));
-    });
-  });
-
   describe('isDefineAMD', () => {
     it('does not detect a generic define function call', () => {
       assert.ok(!check('define();', types.isDefineAMD));

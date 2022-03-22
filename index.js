@@ -1,10 +1,8 @@
 'use strict';
 
-// Deprecated
 // Whether or not the node represents a generic define() call
-// Note: this should not be used as it will have false positives.
 // It is mostly used to guide sniffs for other methods and will be made private eventually.
-module.exports.isDefine = function(node) {
+function isDefine(node) {
   if (!node) return false;
 
   const c = node.callee;
@@ -13,7 +11,7 @@ module.exports.isDefine = function(node) {
          node.type === 'CallExpression' &&
          c.type === 'Identifier' &&
          c.name === 'define';
-};
+}
 
 // Whether or not the node represents any of the AMD define() forms
 module.exports.isDefineAMD = function(node) {
@@ -132,7 +130,7 @@ module.exports.isExports = function(node) {
 
 // define('name', [deps], func)
 module.exports.isNamedForm = function(node) {
-  if (!this.isDefine(node)) return false;
+  if (!isDefine(node)) return false;
 
   const args = node.arguments;
 
@@ -144,7 +142,7 @@ module.exports.isNamedForm = function(node) {
 
 // define([deps], func)
 module.exports.isDependencyForm = function(node) {
-  if (!this.isDefine(node)) return false;
+  if (!isDefine(node)) return false;
 
   const args = node.arguments;
 
@@ -155,7 +153,7 @@ module.exports.isDependencyForm = function(node) {
 
 // define(func(require))
 module.exports.isFactoryForm = function(node) {
-  if (!this.isDefine(node)) return false;
+  if (!isDefine(node)) return false;
 
   const args = node.arguments;
   const firstParamNode = args.length > 0 && args[0].params ? args[0].params[0] : null;
@@ -169,7 +167,7 @@ module.exports.isFactoryForm = function(node) {
 
 // define({})
 module.exports.isNoDependencyForm = function(node) {
-  if (!this.isDefine(node)) return false;
+  if (!isDefine(node)) return false;
 
   const args = node.arguments;
 
@@ -178,7 +176,7 @@ module.exports.isNoDependencyForm = function(node) {
 
 // define(function(require, exports, module)
 module.exports.isREMForm = function(node) {
-  if (!this.isDefine(node)) return false;
+  if (!isDefine(node)) return false;
 
   const args = node.arguments;
   const params = args.length > 0 ? args[0].params : null;
