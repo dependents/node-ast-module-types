@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "lint": "eslint index.js \"test/*.js\"",
+    "fix": "npm run lint -- --fix",
     "mocha": "mocha",
     "test": "npm run lint && npm run mocha"
   },
@@ -35,6 +36,6 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "mocha": "^6.2.3",
-    "node-source-walk": "^4.2.2"
+    "node-source-walk": "^4.3.0"
   }
 }
