@@ -1,4 +1,4 @@
-# ast-module-types [![CI](https://github.com/dependents/node-ast-module-types/actions/workflows/ci.yml/badge.svg)](https://github.com/dependents/node-ast-module-types/actions/workflows/ci.yml) [![npm](https://img.shields.io/npm/v/ast-module-types)](https://www.npmjs.com/package/ast-module-types) [![npm](https://img.shields.io/npm/dm/ast-module-types)](https://www.npmjs.com/package/ast-module-types)
+# ast-module-types [![CI](https://img.shields.io/github/actions/workflow/status/dependents/node-ast-module-types/ci.yml?branch=main&label=CI&logo=github)](https://github.com/dependents/node-ast-module-types/actions/workflows/ci.yml?query=branch%3Amain) [![npm version](https://img.shields.io/npm/v/ast-module-types)](https://www.npmjs.com/package/ast-module-types) [![npm downloads](https://img.shields.io/npm/dm/ast-module-types)](https://www.npmjs.com/package/ast-module-types)
 
 Collection of useful helper functions when trying to determine
 module type (CommonJS or AMD) properties of an AST node.
