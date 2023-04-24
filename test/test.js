@@ -1,5 +1,3 @@
-/* eslint-env mocha */
-
 'use strict';
 
 const assert = require('assert').strict;
@@ -12,7 +10,7 @@ function check(code, checker, harmony) {
   let found = false;
   const walker = new Walker({ esprimaHarmony: Boolean(harmony) });
 
-  walker.walk(code, (node) => {
+  walker.walk(code, node => {
     // Use call to avoid .bind(types) everywhere
     if (checker.call(types, node)) {
       found = true;
@@ -22,7 +20,7 @@ function check(code, checker, harmony) {
 
   return found;
 }
-  
+
 describe('module-types', () => {
   describe('isDefine', () => {
     it('detects define function calls', () => {

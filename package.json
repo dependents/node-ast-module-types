@@ -36,8 +36,54 @@
   },
   "devDependencies": {
     "c8": "^7.13.0",
-    "eslint": "^8.39.0",
     "mocha": "^9.2.2",
-    "node-source-walk": "^5.0.1"
+    "node-source-walk": "^5.0.1",
+    "xo": "^0.52.4"
+  },
+  "xo": {
+    "space": true,
+    "ignores": [
+      "test/fixtures/*"
+    ],
+    "rules": {
+      "arrow-body-style": "off",
+      "capitalized-comments": "off",
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "curly": [
+        "error",
+        "multi-line"
+      ],
+      "max-nested-callbacks": [
+        "error",
+        5
+      ],
+      "operator-linebreak": [
+        "error",
+        "after"
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ],
+      "unicorn/prefer-module": "off",
+      "unicorn/prefer-node-protocol": "off",
+      "unicorn/prefer-top-level-await": "off",
+      "unicorn/prevent-abbreviations": "off"
+    },
+    "overrides": [
+      {
+        "files": "test/**",
+        "envs": [
+          "mocha"
+        ]
+      }
+    ]
   }
 }
