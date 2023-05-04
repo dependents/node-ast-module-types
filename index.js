@@ -199,10 +199,13 @@ module.exports.isES6Import = function(node) {
     case 'Import':
     case 'ImportDeclaration':
     case 'ImportDefaultSpecifier':
-    case 'ImportNamespaceSpecifier':
+    case 'ImportNamespaceSpecifier': {
       return true;
-    default:
+    }
+
+    default: {
       return false;
+    }
   }
 };
 
@@ -212,10 +215,13 @@ module.exports.isES6Export = function(node) {
     case 'ExportNamedDeclaration':
     case 'ExportSpecifier':
     case 'ExportDefaultDeclaration':
-    case 'ExportAllDeclaration':
+    case 'ExportAllDeclaration': {
       return true;
-    default:
+    }
+
+    default: {
       return false;
+    }
   }
 };
 

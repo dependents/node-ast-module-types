@@ -1,4 +1,8 @@
-# ast-module-types [![CI](https://img.shields.io/github/actions/workflow/status/dependents/node-ast-module-types/ci.yml?branch=main&label=CI&logo=github)](https://github.com/dependents/node-ast-module-types/actions/workflows/ci.yml?query=branch%3Amain) [![npm version](https://img.shields.io/npm/v/ast-module-types?logo=npm&logoColor=fff)](https://www.npmjs.com/package/ast-module-types) [![npm downloads](https://img.shields.io/npm/dm/ast-module-types)](https://www.npmjs.com/package/ast-module-types)
+# ast-module-types
+
+[![CI](https://img.shields.io/github/actions/workflow/status/dependents/node-ast-module-types/ci.yml?branch=main&label=CI&logo=github)](https://github.com/dependents/node-ast-module-types/actions/workflows/ci.yml?query=branch%3Amain)
+[![npm version](https://img.shields.io/npm/v/ast-module-types?logo=npm&logoColor=fff)](https://www.npmjs.com/package/ast-module-types)
+[![npm downloads](https://img.shields.io/npm/dm/ast-module-types)](https://www.npmjs.com/package/ast-module-types)
 
 Collection of useful helper functions when trying to determine
 module type (CommonJS or AMD) properties of an AST node.
@@ -9,7 +13,7 @@ module type (CommonJS or AMD) properties of an AST node.
 npm install ast-module-types
 ```
 
-### API
+## API
 
 Each of these takes in a single AST node argument
 and returns a boolean.
@@ -35,7 +39,7 @@ ES6 Types
 * `isES6Import`: if the node is any of the es6 import forms
 * `isES6Export`: if the node is of any es6 export forms
 
-### Usage
+## Usage
 
 ```js
 const types = require('ast-module-types');
@@ -45,3 +49,7 @@ const types = require('ast-module-types');
 
 console.log(types.isDefineAMD(node));
 ```
+
+## License
+
+[MIT](LICENSE)
