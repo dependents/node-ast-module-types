@@ -6,8 +6,8 @@ const types = require('../index.js');
 // Checks whether of not the checker succeeds on
 // a node in the AST of the given source code
 module.exports = function(code, checker, harmony) {
-  let found = false;
   const walker = new Walker({ esprimaHarmony: Boolean(harmony) });
+  let found = false;
 
   walker.walk(code, node => {
     // Use call to avoid .bind(types) everywhere
