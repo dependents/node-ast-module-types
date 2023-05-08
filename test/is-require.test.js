@@ -17,7 +17,7 @@ testSuite('detects require function calls', () => {
 
 testSuite('detects top-level (i.e., top of file) require function calls', () => {
   assert.ok(check('require();', types.isTopLevelRequire));
-  assert.ok(!check('var foo = 2; \nrequire([], function(){});', types.isTopLevelRequire));
+  assert.not.ok(check('var foo = 2; \nrequire([], function(){});', types.isTopLevelRequire));
   assert.ok(check('require(["a"], function(a){});', types.isTopLevelRequire));
 });
 
