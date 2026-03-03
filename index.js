@@ -10,9 +10,9 @@ module.exports.isDefine = function(node) {
   const c = node.callee;
 
   return c &&
-         node.type === 'CallExpression' &&
-         c.type === 'Identifier' &&
-         c.name === 'define';
+    node.type === 'CallExpression' &&
+    c.type === 'Identifier' &&
+    c.name === 'define';
 };
 
 // Whether or not the node represents any of the AMD define() forms
@@ -22,8 +22,8 @@ module.exports.isDefineAMD = function(node) {
   const e = module.exports;
 
   return e.isNamedForm(node) || e.isDependencyForm(node) ||
-         e.isFactoryForm(node) || e.isNoDependencyForm(node) ||
-         e.isREMForm(node);
+    e.isFactoryForm(node) || e.isNoDependencyForm(node) ||
+    e.isREMForm(node);
 };
 
 // Whether or not the node represents a require function call
@@ -38,9 +38,9 @@ module.exports.isPlainRequire = function(node) {
   const c = node.callee;
 
   return c &&
-         node.type === 'CallExpression' &&
-         c.type === 'Identifier' &&
-         c.name === 'require';
+    node.type === 'CallExpression' &&
+    c.type === 'Identifier' &&
+    c.name === 'require';
 };
 
 // Whether or not the node represents main-scoped require function call [require.main.require(...)]
@@ -50,15 +50,15 @@ module.exports.isMainScopedRequire = function(node) {
   const c = node.callee;
 
   return c &&
-         node.type === 'CallExpression' &&
-         c.type === 'MemberExpression' &&
-         c.object.type === 'MemberExpression' &&
-         c.object.object.type === 'Identifier' &&
-         c.object.object.name === 'require' &&
-         c.object.property.type === 'Identifier' &&
-         c.object.property.name === 'main' &&
-         c.property.type === 'Identifier' &&
-         c.property.name === 'require';
+    node.type === 'CallExpression' &&
+    c.type === 'MemberExpression' &&
+    c.object.type === 'MemberExpression' &&
+    c.object.object.type === 'Identifier' &&
+    c.object.object.name === 'require' &&
+    c.object.property.type === 'Identifier' &&
+    c.object.property.name === 'main' &&
+    c.property.type === 'Identifier' &&
+    c.property.name === 'require';
 };
 
 // Whether or not the node represents a require at the top of the module
@@ -66,7 +66,7 @@ module.exports.isMainScopedRequire = function(node) {
 // just take the root and check its immediate child
 module.exports.isTopLevelRequire = function(node) {
   if (node.type !== 'Program' || !node.body ||
-      node.body.length === 0 || !node.body[0].expression) {
+    node.body.length === 0 || !node.body[0].expression) {
     return false;
   }
 
@@ -77,9 +77,9 @@ module.exports.isTopLevelRequire = function(node) {
 // Example: require(deps, function)
 module.exports.isAMDDriverScriptRequire = function(node) {
   return this.isRequire(node) &&
-         node.arguments &&
-         node.arguments[0] && node.arguments[0].type &&
-         node.arguments[0].type === 'ArrayExpression';
+    node.arguments &&
+    node.arguments[0] && node.arguments[0].type &&
+    node.arguments[0].type === 'ArrayExpression';
 };
 
 function isExportsIdentifier(obj) {
@@ -101,8 +101,8 @@ function isModuleExportsAttach(node) {
   if (!node.object || !node.object.object || !node.object.property) return false;
 
   return node.type === 'MemberExpression' &&
-         isModuleIdentifier(node.object.object) &&
-         isExportsIdentifier(node.object.property);
+    isModuleIdentifier(node.object.object) &&
+    isExportsIdentifier(node.object.property);
 }
 
 // module.exports
@@ -110,8 +110,8 @@ function isModuleExportsAssign(node) {
   if (!node.object || !node.property) return false;
 
   return node.type === 'MemberExpression' &&
-         isModuleIdentifier(node.object) &&
-         isExportsIdentifier(node.property);
+    isModuleIdentifier(node.object) &&
+    isExportsIdentifier(node.property);
 }
 
 // exports
@@ -133,7 +133,7 @@ module.exports.isExports = function(node) {
   const leftNode = node.left;
 
   return isModuleExportsAttach(leftNode) || isModuleExportsAssign(leftNode) ||
-         isExportsAttach(leftNode) || isExportsAssign(leftNode);
+    isExportsAttach(leftNode) || isExportsAssign(leftNode);
 };
 
 // define('name', [deps], func)
@@ -143,9 +143,9 @@ module.exports.isNamedForm = function(node) {
   const args = node.arguments;
 
   return args && args.length === 3 &&
-         (args[0].type === 'Literal' || args[0].type === 'StringLiteral') &&
-         args[1].type === 'ArrayExpression' &&
-         isFunctionLike(args[2]);
+    (args[0].type === 'Literal' || args[0].type === 'StringLiteral') &&
+    args[1].type === 'ArrayExpression' &&
+    isFunctionLike(args[2]);
 };
 
 // define([deps], func)
@@ -155,8 +155,8 @@ module.exports.isDependencyForm = function(node) {
   const args = node.arguments;
 
   return args && args.length === 2 &&
-         args[0].type === 'ArrayExpression' &&
-         isFunctionLike(args[1]);
+    args[0].type === 'ArrayExpression' &&
+    isFunctionLike(args[1]);
 };
 
 // define(func(require))
@@ -168,9 +168,9 @@ module.exports.isFactoryForm = function(node) {
 
   // Node should have a function whose first param is 'require'
   return args && args.length === 1 &&
-         isFunctionLike(args[0]) &&
-         firstParamNode && firstParamNode.type === 'Identifier' &&
-         firstParamNode.name === 'require';
+    isFunctionLike(args[0]) &&
+    firstParamNode && firstParamNode.type === 'Identifier' &&
+    firstParamNode.name === 'require';
 };
 
 // define({})
@@ -196,8 +196,8 @@ module.exports.isREMForm = function(node) {
   const [first, second, third] = params;
 
   return first.type === 'Identifier' && first.name === 'require' &&
-         second.type === 'Identifier' && second.name === 'exports' &&
-         third.type === 'Identifier' && third.name === 'module';
+    second.type === 'Identifier' && second.name === 'exports' &&
+    third.type === 'Identifier' && third.name === 'module';
 };
 
 module.exports.isES6Import = function(node) {
