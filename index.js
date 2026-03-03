@@ -11,9 +11,9 @@ class AstModuleTypes {
     const c = node.callee;
 
     return c &&
-           node.type === 'CallExpression' &&
-           c.type === 'Identifier' &&
-           c.name === 'define';
+      node.type === 'CallExpression' &&
+      c.type === 'Identifier' &&
+      c.name === 'define';
   }
 
   // Whether or not the node represents any of the AMD define() forms
@@ -21,8 +21,8 @@ class AstModuleTypes {
     if (!node) return false;
 
     return this.isNamedForm(node) || this.isDependencyForm(node) ||
-           this.isFactoryForm(node) || this.isNoDependencyForm(node) ||
-           this.isREMForm(node);
+      this.isFactoryForm(node) || this.isNoDependencyForm(node) ||
+      this.isREMForm(node);
   }
 
   // Whether or not the node represents a require function call
@@ -99,9 +99,9 @@ class AstModuleTypes {
     const args = node.arguments;
 
     return args && args.length === 3 &&
-           (args[0].type === 'Literal' || args[0].type === 'StringLiteral') &&
-           args[1].type === 'ArrayExpression' &&
-           this.#isFunctionLike(args[2]);
+      (args[0].type === 'Literal' || args[0].type === 'StringLiteral') &&
+      args[1].type === 'ArrayExpression' &&
+      this.#isFunctionLike(args[2]);
   }
 
   // define([deps], func)
@@ -111,8 +111,8 @@ class AstModuleTypes {
     const args = node.arguments;
 
     return args && args.length === 2 &&
-           args[0].type === 'ArrayExpression' &&
-           this.#isFunctionLike(args[1]);
+      args[0].type === 'ArrayExpression' &&
+      this.#isFunctionLike(args[1]);
   }
 
   // define(func(require))
@@ -124,9 +124,9 @@ class AstModuleTypes {
 
     // Node should have a function whose first param is 'require'
     return args && args.length === 1 &&
-           this.#isFunctionLike(args[0]) &&
-           firstParamNode && firstParamNode.type === 'Identifier' &&
-           firstParamNode.name === 'require';
+      this.#isFunctionLike(args[0]) &&
+      firstParamNode && firstParamNode.type === 'Identifier' &&
+      firstParamNode.name === 'require';
   }
 
   // define({})
@@ -152,8 +152,8 @@ class AstModuleTypes {
     const [first, second, third] = params;
 
     return first.type === 'Identifier' && first.name === 'require' &&
-           second.type === 'Identifier' && second.name === 'exports' &&
-           third.type === 'Identifier' && third.name === 'module';
+      second.type === 'Identifier' && second.name === 'exports' &&
+      third.type === 'Identifier' && third.name === 'module';
   }
 
   isES6Import(node) {
@@ -204,8 +204,8 @@ class AstModuleTypes {
     if (!node.object || !node.object.object || !node.object.property) return false;
 
     return node.type === 'MemberExpression' &&
-           this.#isModuleIdentifier(node.object.object) &&
-           this.#isExportsIdentifier(node.object.property);
+      this.#isModuleIdentifier(node.object.object) &&
+      this.#isExportsIdentifier(node.object.property);
   }
 
   // module.exports
@@ -213,8 +213,8 @@ class AstModuleTypes {
     if (!node.object || !node.property) return false;
 
     return node.type === 'MemberExpression' &&
-           this.#isModuleIdentifier(node.object) &&
-           this.#isExportsIdentifier(node.property);
+      this.#isModuleIdentifier(node.object) &&
+      this.#isExportsIdentifier(node.property);
   }
 
   // exports
