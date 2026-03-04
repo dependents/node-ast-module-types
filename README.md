@@ -4,8 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/ast-module-types?logo=npm&logoColor=fff)](https://www.npmjs.com/package/ast-module-types)
 [![npm downloads](https://img.shields.io/npm/dm/ast-module-types)](https://www.npmjs.com/package/ast-module-types)
 
-Collection of useful helper functions when trying to determine
-module type (CommonJS or AMD) properties of an AST node.
+Collection of useful helper functions when trying to determine module type (CommonJS or AMD) properties of an AST node.
 
 **AST checks are based on the Esprima (Spidermonkey) format**
 
@@ -15,8 +14,7 @@ npm install ast-module-types
 
 ## API
 
-Each of these takes in a single AST node argument
-and returns a boolean.
+Each of these takes in a single AST node argument and returns a boolean.
 
 * `isDefineAMD`: if node matches any form of an AMD `define` function call
 * `isRequire`: if node matches a `require` function call (declaring a dependency)
@@ -42,13 +40,26 @@ ES6 Types
 
 ## Usage
 
+### ESM
+
 ```js
-const types = require('ast-module-types');
+import { isDefineAMD } from 'ast-module-types';
 
 // Assume node is some node of an AST that you parsed using esprima or esprima-fb
 // ...
 
-console.log(types.isDefineAMD(node));
+console.log(isDefineAMD(node));
+```
+
+### CommonJS
+
+```js
+const { isDefineAMD } = require('ast-module-types');
+
+// Assume node is some node of an AST that you parsed using esprima or esprima-fb
+// ...
+
+console.log(isDefineAMD(node));
 ```
 
 ## License
