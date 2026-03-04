@@ -23,6 +23,7 @@ testSuite('does not detect a generic define function call', () => {
 
 testSuite('detects a named form AMD define function call', () => {
   assert.not.ok(check('define();', types.isDefineAMD));
+  assert.not.ok(check('require();', types.isDefineAMD));
 });
 
 testSuite('detects AMD define with arrow callback returning class', () => {

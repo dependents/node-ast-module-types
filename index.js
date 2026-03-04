@@ -1,21 +1,6 @@
 'use strict';
 
 class AstModuleTypes {
-  // Deprecated
-  // Whether or not the node represents a generic define() call
-  // Note: this should not be used as it will have false positives.
-  // It is mostly used to guide sniffs for other methods and will be made private eventually.
-  isDefine(node) {
-    if (!node) return false;
-
-    const c = node.callee;
-
-    return c &&
-      node.type === 'CallExpression' &&
-      c.type === 'Identifier' &&
-      c.name === 'define';
-  }
-
   // Whether or not the node represents any of the AMD define() forms
   isDefineAMD(node) {
     if (!node) return false;
@@ -94,7 +79,7 @@ class AstModuleTypes {
 
   // define('name', [deps], func)
   isNamedForm(node) {
-    if (!this.isDefine(node)) return false;
+    if (!this.#isDefine(node)) return false;
 
     const args = node.arguments;
 
@@ -106,7 +91,7 @@ class AstModuleTypes {
 
   // define([deps], func)
   isDependencyForm(node) {
-    if (!this.isDefine(node)) return false;
+    if (!this.#isDefine(node)) return false;
 
     const args = node.arguments;
 
@@ -117,7 +102,7 @@ class AstModuleTypes {
 
   // define(func(require))
   isFactoryForm(node) {
-    if (!this.isDefine(node)) return false;
+    if (!this.#isDefine(node)) return false;
 
     const args = node.arguments;
     const firstParamNode = args.length > 0 && args[0].params ? args[0].params[0] : null;
@@ -131,7 +116,7 @@ class AstModuleTypes {
 
   // define({})
   isNoDependencyForm(node) {
-    if (!this.isDefine(node)) return false;
+    if (!this.#isDefine(node)) return false;
 
     const args = node.arguments;
 
@@ -140,7 +125,7 @@ class AstModuleTypes {
 
   // define(function(require, exports, module)
   isREMForm(node) {
-    if (!this.isDefine(node)) return false;
+    if (!this.#isDefine(node)) return false;
 
     const args = node.arguments;
     const params = args.length > 0 ? args[0].params : null;
@@ -189,6 +174,20 @@ class AstModuleTypes {
 
   isDynamicImport(node) {
     return node.callee && node.callee.type === 'Import' && node.arguments.length > 0;
+  }
+
+  // Whether or not the node represents a generic define() call
+  // Note: this should not be used as it will have false positives.
+  // It is mostly used to guide sniffs for other methods.
+  #isDefine(node) {
+    if (!node) return false;
+
+    const c = node.callee;
+
+    return c &&
+      node.type === 'CallExpression' &&
+      c.type === 'Identifier' &&
+      c.name === 'define';
   }
 
   #isExportsIdentifier(obj) {
