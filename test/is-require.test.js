@@ -1,29 +1,27 @@
-'use strict';
-
-const { suite } = require('uvu');
-const assert = require('uvu/assert');
-const types = require('../index.js');
-const check = require('./utils.js');
+import { suite } from 'uvu';
+import * as assert from 'uvu/assert';
+import { isRequire, isTopLevelRequire } from '../index.js';
+import check from './utils.js';
 
 const testSuite = suite('isRequire');
 
 testSuite('detects require function calls', () => {
-  assert.ok(check('require();', types.isRequire));
+  assert.ok(check('require();', isRequire));
 });
 
 testSuite('detects require.main.require function calls', () => {
-  assert.ok(check('require.main.require();', types.isRequire));
+  assert.ok(check('require.main.require();', isRequire));
 });
 
 testSuite('detects top-level (i.e., top of file) require function calls', () => {
-  assert.ok(check('require();', types.isTopLevelRequire));
-  assert.not.ok(check('var foo = 2; \nrequire([], function(){});', types.isTopLevelRequire));
-  assert.ok(check('require(["a"], function(a){});', types.isTopLevelRequire));
+  assert.ok(check('require();', isTopLevelRequire));
+  assert.not.ok(check('var foo = 2; \nrequire([], function(){});', isTopLevelRequire));
+  assert.ok(check('require(["a"], function(a){});', isTopLevelRequire));
 });
 
 testSuite('does not fail on es6', () => {
   assert.not.throws(() => {
-    check('import require from "mylib"; \nrequire();', types.isTopLevelRequire, true);
+    check('import require from "mylib"; \nrequire();', isTopLevelRequire, true);
   });
 });
 
