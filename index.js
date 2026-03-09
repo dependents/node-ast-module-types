@@ -90,6 +90,12 @@ function isModuleIdentifier(obj) {
   return obj.type && obj.type === 'Identifier' && obj.name === 'module';
 }
 
+function isFunctionLike(node) {
+  if (!node) return false;
+
+  return node.type === 'FunctionExpression' || node.type === 'ArrowFunctionExpression';
+}
+
 // module.exports.foo
 function isModuleExportsAttach(node) {
   if (!node.object || !node.object.object || !node.object.property) return false;
@@ -139,7 +145,7 @@ module.exports.isNamedForm = function(node) {
   return args && args.length === 3 &&
          (args[0].type === 'Literal' || args[0].type === 'StringLiteral') &&
          args[1].type === 'ArrayExpression' &&
-         args[2].type === 'FunctionExpression';
+         isFunctionLike(args[2]);
 };
 
 // define([deps], func)
@@ -150,7 +156,7 @@ module.exports.isDependencyForm = function(node) {
 
   return args && args.length === 2 &&
          args[0].type === 'ArrayExpression' &&
-         args[1].type === 'FunctionExpression';
+         isFunctionLike(args[1]);
 };
 
 // define(func(require))
@@ -162,7 +168,7 @@ module.exports.isFactoryForm = function(node) {
 
   // Node should have a function whose first param is 'require'
   return args && args.length === 1 &&
-         args[0].type === 'FunctionExpression' &&
+         isFunctionLike(args[0]) &&
          firstParamNode && firstParamNode.type === 'Identifier' &&
          firstParamNode.name === 'require';
 };
@@ -183,7 +189,7 @@ module.exports.isREMForm = function(node) {
   const args = node.arguments;
   const params = args.length > 0 ? args[0].params : null;
 
-  if (!args || args.length === 0 || args[0].type !== 'FunctionExpression' || params.length !== 3) {
+  if (!args || args.length === 0 || !isFunctionLike(args[0]) || params.length !== 3) {
     return false;
   }
 
