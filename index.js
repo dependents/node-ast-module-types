@@ -1,5 +1,3 @@
-'use strict';
-
 class AstModuleTypes {
   // Whether or not the node represents any of the AMD define() forms
   isDefineAMD(node) {
@@ -229,4 +227,6 @@ class AstModuleTypes {
   }
 }
 
-module.exports = new AstModuleTypes();
+const moduleTypes = new AstModuleTypes();
+
+export default moduleTypes;

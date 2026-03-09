@@ -1,11 +1,9 @@
-'use strict';
-
-const Walker = require('node-source-walk');
-const types = require('../index.js');
+import Walker from 'node-source-walk';
+import types from '../index.js';
 
 // Checks whether of not the checker succeeds on
 // a node in the AST of the given source code
-module.exports = function(code, checker, harmony) {
+function check(code, checker, harmony) {
   const walker = new Walker({ esprimaHarmony: Boolean(harmony) });
   let found = false;
 
@@ -18,4 +16,6 @@ module.exports = function(code, checker, harmony) {
   });
 
   return found;
-};
+}
+
+export default check;

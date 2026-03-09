@@ -42,6 +42,19 @@ ES6 Types
 
 ## Usage
 
+### ESM
+
+```js
+import types from 'ast-module-types';
+
+// Assume node is some node of an AST that you parsed using esprima or esprima-fb
+// ...
+
+console.log(types.isDefineAMD(node));
+```
+
+### CommonJS
+
 ```js
 const types = require('ast-module-types');
 

@@ -1,9 +1,7 @@
-'use strict';
-
-const { suite } = require('uvu');
-const assert = require('uvu/assert');
-const types = require('../index.js');
-const check = require('./utils.js');
+import { suite } from 'uvu';
+import * as assert from 'uvu/assert';
+import types from '../index.js';
+import check from './utils.js';
 
 const testSuite = suite('module-types');
 
