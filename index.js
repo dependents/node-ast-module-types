@@ -1,4 +1,4 @@
-// Whether or not the node represents any of the AMD define() forms
+// Determines whether a node represents any AMD-style define() signature
 export function isDefineAMD(node) {
   if (!node) return false;
 
@@ -7,12 +7,12 @@ export function isDefineAMD(node) {
     isREMForm(node);
 }
 
-// Whether or not the node represents a require function call
+// Determines whether a node represents any form of require() call
 export function isRequire(node) {
   return isPlainRequire(node) || isMainScopedRequire(node);
 }
 
-// Whether or not the node represents a plain require function call [require(...)]
+// Checks for a standard require(...) call
 export function isPlainRequire(node) {
   if (!node) return false;
   if (node.type !== 'CallExpression') return false;
@@ -22,7 +22,7 @@ export function isPlainRequire(node) {
   return c && c.type === 'Identifier' && c.name === 'require';
 }
 
-// Whether or not the node represents main-scoped require function call [require.main.require(...)]
+// Checks for require.main.require(...) usage
 export function isMainScopedRequire(node) {
   if (!node) return false;
   if (node.type !== 'CallExpression') return false;
@@ -43,7 +43,7 @@ export function isMainScopedRequire(node) {
   return c.property.type === 'Identifier' && c.property.name === 'require';
 }
 
-// Whether or not the node represents a require at the top of the module
+// Checks whether the first expression in a Program is a require() call
 // Instead of trying to find the require then backtrack to the top,
 // just take the root and check its immediate child
 export function isTopLevelRequire(node) {
@@ -54,8 +54,7 @@ export function isTopLevelRequire(node) {
   return isRequire(node.body[0].expression);
 }
 
-// Whether or not the node represents an AMD-style driver script's require
-// Example: require(deps, function)
+// Checks for AMD driver scripts: require([deps], callback)
 export function isAMDDriverScriptRequire(node) {
   if (!isRequire(node)) return false;
 
@@ -67,19 +66,18 @@ export function isAMDDriverScriptRequire(node) {
   return firstArg && firstArg.type === 'ArrayExpression';
 }
 
-// Whether or not the node represents the use of
-// assigning (and possibly attaching) something to module.exports or exports
+// Determines whether a node assigns to module.exports or exports.*
 export function isExports(node) {
   if (!node || node.type !== 'AssignmentExpression') return false;
 
-  // Only the left side matters
+  // Only the left-hand side matters
   const leftNode = node.left;
 
   return isModuleExportsAttach(leftNode) || isModuleExportsAssign(leftNode) ||
     isExportsAttach(leftNode) || isExportsAssign(leftNode);
 }
 
-// define('name', [deps], func)
+// Matches: define('name', [deps], factory)
 export function isNamedForm(node) {
   if (!isDefine(node)) return false;
 
@@ -94,7 +92,7 @@ export function isNamedForm(node) {
   return second.type === 'ArrayExpression' && isFunctionLike(third);
 }
 
-// define([deps], func)
+// Matches: define([deps], factory)
 export function isDependencyForm(node) {
   if (!isDefine(node)) return false;
 
@@ -104,7 +102,7 @@ export function isDependencyForm(node) {
   return args[0].type === 'ArrayExpression' && isFunctionLike(args[1]);
 }
 
-// define(func(require))
+// Matches: define(function(require) { ... })
 export function isFactoryForm(node) {
   if (!isDefine(node)) return false;
 
@@ -116,11 +114,11 @@ export function isFactoryForm(node) {
   const firstParamNode = firstArg.params && firstArg.params[0];
   if (!firstParamNode) return false;
 
-  // Node should have a function whose first param is 'require'
+  // Factory form requires the first parameter to be named "require"
   return firstParamNode.type === 'Identifier' && firstParamNode.name === 'require';
 }
 
-// define({})
+// Matches: define({})
 export function isNoDependencyForm(node) {
   if (!isDefine(node)) return false;
 
@@ -130,7 +128,7 @@ export function isNoDependencyForm(node) {
   return args[0].type === 'ObjectExpression';
 }
 
-// define(function(require, exports, module)
+// Matches: define(function(require, exports, module) { ... })
 export function isREMForm(node) {
   if (!isDefine(node)) return false;
 
@@ -148,6 +146,7 @@ export function isREMForm(node) {
     third.type === 'Identifier' && third.name === 'module';
 }
 
+// Checks for ES6 import syntax
 export function isES6Import(node) {
   const t = node.type;
 
@@ -157,6 +156,7 @@ export function isES6Import(node) {
     t === 'ImportNamespaceSpecifier';
 }
 
+// Checks for ES6 export syntax
 export function isES6Export(node) {
   const t = node.type;
 
@@ -167,14 +167,14 @@ export function isES6Export(node) {
     t === 'ExportAllDeclaration';
 }
 
+// Checks for dynamic import(...) expressions
 export function isDynamicImport(node) {
   const c = node.callee;
   return c && c.type === 'Import' && node.arguments.length > 0;
 }
 
-// Whether or not the node represents a generic define() call
-// Note: this should not be used as it will have false positives.
-// It is mostly used to guide sniffs for other methods.
+// Checks for a generic define(...) call
+// Note: intentionally broad; used only as a helper for more specific checks
 function isDefine(node) {
   if (!node || node.type !== 'CallExpression') return false;
 
@@ -190,7 +190,7 @@ function isModuleIdentifier(obj) {
   return obj && obj.type === 'Identifier' && obj.name === 'module';
 }
 
-// module.exports.foo
+// Matches: module.exports.foo = ...
 function isModuleExportsAttach(node) {
   if (!node || node.type !== 'MemberExpression') return false;
 
@@ -200,7 +200,7 @@ function isModuleExportsAttach(node) {
   return isModuleIdentifier(obj.object) && isExportsIdentifier(obj.property);
 }
 
-// module.exports
+// Matches: module.exports = ...
 function isModuleExportsAssign(node) {
   if (!node.object || !node.property) return false;
   if (node.type !== 'MemberExpression') return false;
@@ -208,12 +208,12 @@ function isModuleExportsAssign(node) {
   return isModuleIdentifier(node.object) && isExportsIdentifier(node.property);
 }
 
-// exports
+// Matches: exports = ...
 function isExportsAssign(node) {
   return isExportsIdentifier(node);
 }
 
-// exports.foo
+// Matches: exports.foo = ...
 function isExportsAttach(node) {
   if (!node) return false;
   return node.type === 'MemberExpression' && isExportsIdentifier(node.object);
