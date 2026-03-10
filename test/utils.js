@@ -1,7 +1,7 @@
 import Walker from 'node-source-walk';
 import types from '../index.js';
 
-// Checks whether of not the checker succeeds on
+// Checks whether or not the checker succeeds on
 // a node in the AST of the given source code
 function check(code, checker, harmony) {
   const walker = new Walker({ esprimaHarmony: Boolean(harmony) });
