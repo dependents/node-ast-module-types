@@ -25,4 +25,15 @@ testSuite('detects a named form AMD define function call', () => {
   assert.not.ok(check('define();', types.isDefineAMD));
 });
 
+testSuite('detects AMD define with arrow callback returning class', () => {
+  assert.ok(check('define(["jquery"] , ($) => { class A {} return A;});', types.isDefineAMD));
+});
+
+testSuite('detects AMD forms with arrow callbacks', () => {
+  assert.ok(check('define("name", ["jquery"], ($) => $);', types.isDefineAMD));
+  assert.ok(check('define(["jquery"], ($) => $);', types.isDefineAMD));
+  assert.ok(check('define((require) => require("jquery"));', types.isDefineAMD));
+  assert.ok(check('define((require, exports, module) => { exports.x = true; });', types.isDefineAMD));
+});
+
 testSuite.run();
