@@ -3,6 +3,9 @@ class AstModuleTypes {
   isDefineAMD(node) {
     if (!node) return false;
 
+    // All AMD define forms are define() calls; return early before checking each form.
+    if (!this.#isDefine(node)) return false;
+
     return this.isNamedForm(node) || this.isDependencyForm(node) ||
       this.isFactoryForm(node) || this.isNoDependencyForm(node) ||
       this.isREMForm(node);
