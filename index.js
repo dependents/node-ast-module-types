@@ -2,6 +2,9 @@
 export function isDefineAMD(node) {
   if (!node) return false;
 
+  // All AMD define forms are define() calls; return early before checking each form.
+  if (!isDefine(node)) return false;
+
   return isNamedForm(node) || isDependencyForm(node) ||
     isFactoryForm(node) || isNoDependencyForm(node) ||
     isREMForm(node);
