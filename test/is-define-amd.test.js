@@ -7,7 +7,7 @@ const check = require('./utils.js');
 
 const testSuite = suite('isDefineAMD');
 
-testSuite('does not detect a generic define function call', () => {
+testSuite('detects all AMD define forms and ignores generic define calls', () => {
   assert.not.ok(check('define();', types.isDefineAMD));
   // Named form
   assert.ok(check('define("foobar", ["a"], function(a){});', types.isDefineAMD));

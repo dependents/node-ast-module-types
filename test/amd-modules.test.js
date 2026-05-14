@@ -78,7 +78,7 @@ testSuite('detects no dependency form modules', () => {
   assert.ok(check('define({});', types.isNoDependencyForm));
 });
 
-testSuite('needs a aingle argument', () => {
+testSuite('needs a single argument', () => {
   assert.not.ok(check('define({}, 123);', types.isNoDependencyForm));
 });
 

@@ -11,7 +11,7 @@ testSuite('detects require function calls', () => {
   assert.ok(check('require();', types.isRequire));
 });
 
-testSuite('detects require function calls', () => {
+testSuite('detects require.main.require function calls', () => {
   assert.ok(check('require.main.require();', types.isRequire));
 });
 
