@@ -1,7 +1,7 @@
 {
   "name": "ast-module-types",
   "version": "7.0.0",
-  "description": "Collection of useful helper functions when trying to determine module type (CommonJS or AMD) properties of an AST node.",
+  "description": "A collection of useful helper functions when trying to determine module type (CommonJS or AMD) properties of an AST node.",
   "type": "module",
   "exports": {
     ".": "./index.js"
@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "xo",
     "fix": "xo --fix",
-    "uvu": "uvu test -i fixtures -i utils",
+    "uvu": "uvu test -i utils",
     "test": "npm run lint && npm run uvu",
     "test:ci": "c8 npm run uvu"
   },
