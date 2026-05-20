@@ -1,4 +1,3 @@
-// Determines whether a node represents any AMD-style define() signature
 export function isDefineAMD(node) {
   if (!node) return false;
 
@@ -10,12 +9,10 @@ export function isDefineAMD(node) {
     isREMForm(node);
 }
 
-// Determines whether a node represents any form of require() call
 export function isRequire(node) {
   return isPlainRequire(node) || isMainScopedRequire(node);
 }
 
-// Checks for a standard require(...) call
 export function isPlainRequire(node) {
   if (!node) return false;
   if (node.type !== 'CallExpression') return false;
@@ -25,7 +22,6 @@ export function isPlainRequire(node) {
   return c && c.type === 'Identifier' && c.name === 'require';
 }
 
-// Checks for require.main.require(...) usage
 export function isMainScopedRequire(node) {
   if (!node) return false;
   if (node.type !== 'CallExpression') return false;
@@ -73,7 +69,6 @@ export function isAMDDriverScriptRequire(node) {
 export function isExports(node) {
   if (!node || node.type !== 'AssignmentExpression') return false;
 
-  // Only the left-hand side matters
   const leftNode = node.left;
 
   return isModuleExportsAttach(leftNode) || isModuleExportsAssign(leftNode) ||
@@ -117,7 +112,6 @@ export function isFactoryForm(node) {
   const firstParamNode = firstArg.params && firstArg.params[0];
   if (!firstParamNode) return false;
 
-  // Factory form requires the first parameter to be named "require"
   return firstParamNode.type === 'Identifier' && firstParamNode.name === 'require';
 }
 
@@ -149,7 +143,6 @@ export function isREMForm(node) {
     third.type === 'Identifier' && third.name === 'module';
 }
 
-// Checks for ES6 import syntax
 export function isES6Import(node) {
   const t = node.type;
 
@@ -159,7 +152,6 @@ export function isES6Import(node) {
     t === 'ImportNamespaceSpecifier';
 }
 
-// Checks for ES6 export syntax
 export function isES6Export(node) {
   const t = node.type;
 
@@ -170,7 +162,6 @@ export function isES6Export(node) {
     t === 'ExportAllDeclaration';
 }
 
-// Checks for dynamic import(...) expressions
 export function isDynamicImport(node) {
   const c = node.callee;
   return c && c.type === 'Import' && node.arguments.length > 0;
