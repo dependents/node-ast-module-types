@@ -3,7 +3,7 @@ import Walker from 'node-source-walk';
 // Checks whether or not the checker succeeds on
 // a node in the AST of the given source code
 function check(code, checker, harmony) {
-  const walker = new Walker({ esprimaHarmony: Boolean(harmony) });
+  const walker = new Walker();
   let found = false;
 
   walker.walk(code, node => {
