@@ -21,7 +21,7 @@ testSuite('detects top-level (i.e., top of file) require function calls', () => 
 
 testSuite('does not fail on es6', () => {
   assert.not.throws(() => {
-    check('import require from "mylib"; \nrequire();', isTopLevelRequire, true);
+    check('import require from "mylib"; \nrequire();', isTopLevelRequire);
   });
 });
 
