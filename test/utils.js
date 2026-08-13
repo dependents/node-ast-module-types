@@ -2,7 +2,7 @@ import Walker from 'node-source-walk';
 
 // Checks whether or not the checker succeeds on
 // a node in the AST of the given source code
-function check(code, checker, harmony) {
+function check(code, checker) {
   const walker = new Walker();
   let found = false;
 
